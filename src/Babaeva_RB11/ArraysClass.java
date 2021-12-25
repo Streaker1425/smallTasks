@@ -2,8 +2,9 @@ package Babaeva_RB11;
 
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Arrays;
 
-public class Arrays {
+public class ArraysClass {
     public static Scanner scan = new Scanner(System.in);
 
     public static int[] initArray(){
@@ -20,6 +21,9 @@ public class Arrays {
         int[] temp = new int[len];
         for(int i = 0; i < len; i++){
             temp[i] = rand.nextInt() % 100;
+            if(temp[i]<0){
+                temp[i] *= -1;
+            }
         }
         return temp;
     }
@@ -52,6 +56,32 @@ public class Arrays {
         }
         return arr;
     }
+    public static int[] shiftElements(int[] arr){
+        int last = 0;
+        for (int i = arr.length-1; i > 0; i--){
+            if(i == arr.length-1){
+                last = arr[i];
+                arr[i] = arr[i-1];
+            } else {
+                arr[i] = arr[i-1];
+            }
+        }
+        arr[0] = last;
+        return arr;
+    }
+    public static int[] shiftElements(int[] arr, int amount){
+        for(int i = 0; i < amount; i++){
+            shiftElements(arr);
+        }
+        return arr;
+    }
+    public static double defineAverage(int[] arr){
+        int sum = 0;
+        for(int elem : arr){
+            sum += elem;
+        }
+        return (double) sum / (arr.length);
+    }
     public static void main(String[] args) {
         System.out.print("Enter length of array>");
         int n;
@@ -68,9 +98,16 @@ public class Arrays {
         } else {
             arr = initArray(n);
         }
+        System.out.print("Your array is: ");
         print(arr);
-        System.out.println();
-        arr = sort(arr);
-        print(arr);
+
+
+        System.out.print("\nSorted array is: ");
+        print(sort(arr));
+        System.out.print("\nShifted array is: ");
+        print(shiftElements(arr));
+        System.out.print("\nThree times shifted array is: ");
+        print(shiftElements(arr, 3));
+        System.out.println("\nAverage number of array is: " + defineAverage(arr));
     }
 }
